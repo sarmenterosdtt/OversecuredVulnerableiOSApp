@@ -33,8 +33,7 @@ jobs:
        
     - name: run cyclonedx
       run: |
-        cd Pods
-        ls
+      
         cyclonedx-cocoapods --path . --output bom.xml
         
     - name: Upload Syft Scan Results
