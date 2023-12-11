@@ -33,7 +33,9 @@ jobs:
        
     - name: run cyclonedx
       run: |
-      
+        pod repo update
+        pod search Alamofire
+
         cyclonedx-cocoapods --path . --output bom.xml
         
     - name: Upload Syft Scan Results
