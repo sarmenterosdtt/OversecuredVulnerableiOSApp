@@ -34,7 +34,6 @@ jobs:
     - name: run cyclonedx
       run: |
         pod repo update
-        pod search Alamofire
 
         cyclonedx-cocoapods --path . --output bom.xml
         
@@ -42,5 +41,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: cyclonedx-results
-        path: Pods/sbom_cyclonedx.json
+        path: sbom_cyclonedx.json
         
