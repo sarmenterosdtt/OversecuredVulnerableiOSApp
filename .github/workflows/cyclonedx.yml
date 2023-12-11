@@ -1,0 +1,45 @@
+# This workflow will build a Swift project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
+
+name: cyclonedx
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  scan:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+ 
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '2.7'
+        
+    - name: Install CocoaPods
+      run: |
+        gem install cocoapods
+        
+    - name: Install cyclonedx
+      run: |
+        gem install cyclonedx-cocoapods
+       
+    - name: run cyclonedx
+      run: |
+        cd Pods
+        ls
+        cyclonedx-cocoapods --path . --output bom.xml
+        
+    - name: Upload Syft Scan Results
+      uses: actions/upload-artifact@v2
+      with:
+        name: cyclonedx-results
+        path: Pods/sbom_cyclonedx.json
+        
